@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 10,
   },
+  container: {
+    flex: 1,
+  },
 });
 
 export default styles;

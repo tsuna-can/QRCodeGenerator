@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, SafeAreaView, ScrollView} from 'react-native';
-import ArrowButton from '../../components/arrowButton/arrowButton';
+import Button from '../../components/button/button';
 import styles from './nextScreen.style';
 
 const NextScreen = ({navigation}) => {
@@ -9,14 +9,14 @@ const NextScreen = ({navigation}) => {
       <ScrollView>
         <Text>Next Screen</Text>
         <View style={styles.buttonContainer}>
-          <ArrowButton
+          <Button
             direction="left"
             onClick={() => {
               navigation.navigate('Home');
               console.log('pressed');
             }}
           />
-          <ArrowButton
+          <Button
             onClick={() => {
               console.log('pressed');
             }}

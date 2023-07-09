@@ -1,10 +1,10 @@
 import {StyleSheet} from 'react-native';
-import colors from '../../theme/color';
+import COLORS from '../../theme/colors';
 
 const styles = StyleSheet.create({
   button: {
     flex: 1,
-    backgroundColor: colors.PRIMARY,
+    backgroundColor: COLORS.PRIMARY,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 5,
