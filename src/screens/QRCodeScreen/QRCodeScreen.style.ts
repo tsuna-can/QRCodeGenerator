@@ -1,15 +1,33 @@
 import {StyleSheet} from 'react-native';
+import COLORS from '../../theme/colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-    height: '100%',
+    flexDirection: 'row',
+    marginHorizontal: 20,
+  },
+  text: {
+    fontSize: 40,
+    color: COLORS.BLACK,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+  qrCodeContainer: {
+    flex: 5,
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
     padding: 10,
   },
 });

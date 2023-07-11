@@ -22,8 +22,16 @@ const QRCodeScreen = ({navigation, route}: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Current : {`${fixedValue.current}${variableValue}`}</Text>
-      <QRCodeView value={`${fixedValue.current}${variableValue}`} size={100} />
+      <View style={styles.textContainer}>
+        <Text
+          style={styles.text}>{`${fixedValue.current}${variableValue}`}</Text>
+      </View>
+      <View style={styles.qrCodeContainer}>
+        <QRCodeView
+          value={`${fixedValue.current}${variableValue}`}
+          size={250}
+        />
+      </View>
       <View style={styles.buttonContainer}>
         <Button
           disabled={variableValue === minValue}
