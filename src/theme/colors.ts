@@ -6,6 +6,7 @@ const COLORS = {
   WHITE: 'white',
   BLACK: 'black',
   ORANGE: '#f4511e',
+  GRAY: '#808080',
 };
 
 export default COLORS;

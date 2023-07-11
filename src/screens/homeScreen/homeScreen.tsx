@@ -4,9 +4,21 @@ import Button from '../../components/button/button';
 import styles from './homeScreen.style';
 import Input from '../../components/input/input';
 import {SCREENS} from '../../utils/constants';
-import DropDownPicker from 'react-native-dropdown-picker';
 import {zeroPaddiong, calcMaxValue} from '../../utils/padding';
 import {useForm, Controller, set} from 'react-hook-form';
+import DropDown from '../../components/dropDown/dropDown';
+
+const options = [
+  {label: '1', value: 1},
+  {label: '2', value: 2},
+  {label: '3', value: 3},
+  {label: '4', value: 4},
+  {label: '5', value: 5},
+  {label: '6', value: 6},
+  {label: '7', value: 7},
+  {label: '8', value: 8},
+  {label: '8', value: 9},
+];
 
 export type FormData = {
   formFixedValue: string;
@@ -29,17 +41,7 @@ const HomeScreen = ({navigation}) => {
   const [variableValue, setVariableValue] = useState('');
   const [open, setOpen] = useState(false);
   const [digits, setDigits] = useState(1);
-  const [items, setItems] = useState([
-    {label: '1', value: 1},
-    {label: '2', value: 2},
-    {label: '3', value: 3},
-    {label: '4', value: 4},
-    {label: '5', value: 5},
-    {label: '6', value: 6},
-    {label: '7', value: 7},
-    {label: '8', value: 8},
-    {label: '8', value: 9},
-  ]);
+  const [items, setItems] = useState(options);
 
   const onSubmit = (data: FormData) => {
     navigation.navigate(SCREENS.QR_CODE, {
@@ -51,7 +53,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <View style={styles.inputContainer}>
         <Controller
           control={control}
           rules={{
@@ -66,6 +68,7 @@ const HomeScreen = ({navigation}) => {
                 setFixedValue(value);
               }}
               value={value}
+              style={styles.input}
             />
           )}
           name="formFixedValue"
@@ -88,6 +91,7 @@ const HomeScreen = ({navigation}) => {
               }}
               value={value}
               keyboardType="numeric"
+              style={styles.input}
             />
           )}
           name="formVariableValue"
@@ -96,23 +100,34 @@ const HomeScreen = ({navigation}) => {
           <Text>Please input only numeric value.</Text>
         )}
       </View>
-      <DropDownPicker
-        open={open}
-        value={digits}
-        items={items}
-        setOpen={setOpen}
-        setValue={setDigits}
-        setItems={setItems}
-      />
-      <Text>
-        From : {`${fixedValue}${zeroPaddiong(variableValue, digits)}`}
-      </Text>
-      <Text>To : {`${fixedValue}${calcMaxValue(digits)}`}</Text>
-      <Button
-        text="Start Generate"
-        disabled={fixedValue === '' && variableValue === ''}
-        onClick={handleSubmit(onSubmit)}
-      />
+      <View style={styles.dropDownContaier}>
+        <DropDown
+          open={open}
+          value={digits}
+          items={items}
+          setOpen={setOpen}
+          setValue={setDigits}
+          setItems={setItems}
+        />
+      </View>
+      <View style={styles.textContainer}>
+        <View style={styles.fromToContainer}>
+          <Text style={styles.fromToText}>
+            {`${fixedValue}${zeroPaddiong(variableValue, digits)}`}
+          </Text>
+          <Text style={styles.tildeText}>~</Text>
+          <Text style={styles.fromToText}>
+            {`${fixedValue}${calcMaxValue(digits)}`}
+          </Text>
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Button
+          text="Start Generate"
+          disabled={fixedValue === '' && variableValue === ''}
+          onClick={handleSubmit(onSubmit)}
+        />
+      </View>
     </SafeAreaView>
   );
 };
