@@ -1,30 +1,51 @@
 import React from 'react';
-import {Input as RNEInput} from '@rneui/themed';
+import {TextInput, TextInputProps, Text, View} from 'react-native';
+import {
+  Controller,
+  Control,
+  DeepMap,
+  FieldValues,
+  FieldError,
+} from 'react-hook-form';
 import styles from './input.styles';
 
-type Props = {
+interface Props extends TextInputProps {
+  control: Control<any>;
+  areaName: string;
+  defaultValue?: any;
   label: string;
-  onChangeText: (text: string) => void;
-  placeholder?: string;
-  errorMessage?: string;
-  keyboradType?: 'numeric' | 'default';
-};
+  autoCompleteType: string;
+}
 
-const Input = ({
-  label,
-  onChangeText,
-  placeholder = '',
-  errorMessage = '',
-  keyboradType = 'default',
-}: Props): JSX.Element => {
+const Input: React.FC<Props> = ({
+  control,
+  areaName,
+  defaultValue,
+  ...props
+}) => {
   return (
-    <RNEInput
-      label={label}
-      onChangeText={onChangeText}
-      placeholder={placeholder}
-      errorStyle={styles.errorMessage}
-      errorMessage={errorMessage}
-      keyboardType={keyboradType}
+    <Controller
+      control={control}
+      name={areaName}
+      defaultValue={defaultValue}
+      render={({
+        field: {onChange, value, onBlur, name},
+        formState: {errors},
+      }) => (
+        <View>
+          <TextInput
+            {...props}
+            value={value || ''}
+            onBlur={onBlur}
+            onChangeText={onChange}
+          />
+          {errors[name] && (
+            <Text style={styles.text}>
+              {(errors[name] as DeepMap<FieldValues, FieldError>)?.message}
+            </Text>
+          )}
+        </View>
+      )}
     />
   );
 };
