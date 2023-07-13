@@ -34,7 +34,7 @@ const QRCodeScreen = ({navigation, route}: Props) => {
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          disabled={variableValue === minValue}
+          disabled={variableValue === '' || variableValue === minValue}
           onClick={() => {
             setVariableValue(curr => {
               const next = Math.max(Number(curr) - 1, 0);
@@ -44,7 +44,7 @@ const QRCodeScreen = ({navigation, route}: Props) => {
           icon={<Icon name="arrow-left" size={50} color="white" />}
         />
         <Button
-          disabled={variableValue === lastValue}
+          disabled={variableValue === '' || variableValue === lastValue}
           onClick={() => {
             setVariableValue(curr => {
               const next = Math.min(Number(curr) + 1, Number(lastValue));

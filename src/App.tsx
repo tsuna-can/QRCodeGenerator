@@ -1,6 +1,9 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  NativeStackNavigationOptions,
+  createNativeStackNavigator,
+} from '@react-navigation/native-stack';
 import HomeScreen from './screens/homeScreen/homeScreen';
 import QRCodeScreen from './screens/QRCodeScreen/QRCodeScreen';
 import {SCREENS} from './utils/constants';
@@ -13,6 +16,15 @@ export type RootStackParamList = {
   QRCode: {fixedValue: string; variableValue: string; digits: number};
 };
 
+const commonOptions: NativeStackNavigationOptions = {
+  title: 'QR Code Generator',
+  headerTitleAlign: 'center',
+  headerTintColor: COLORS.BLACK,
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+};
+
 function App(): JSX.Element {
   return (
     <NavigationContainer>
@@ -20,31 +32,14 @@ function App(): JSX.Element {
         <Stack.Screen
           name={SCREENS.HOME}
           component={HomeScreen}
-          options={{
-            title: 'QR Code Generator',
-            headerTitleAlign: 'center',
-            headerStyle: {
-              backgroundColor: COLORS.ORANGE,
-            },
-            headerTintColor: COLORS.WHITE,
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }}
+          options={{...commonOptions, title: 'QR Code Generator'}}
         />
         <Stack.Screen
           name={SCREENS.QR_CODE}
           component={QRCodeScreen}
           options={{
-            title: 'QR Code Generator',
-            headerTitleAlign: 'center',
-            headerStyle: {
-              backgroundColor: COLORS.ORANGE,
-            },
-            headerTintColor: COLORS.WHITE,
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
+            ...commonOptions,
+            title: 'QR Code',
           }}
         />
       </Stack.Navigator>

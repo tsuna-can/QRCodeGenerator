@@ -19,11 +19,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   dropDownContaier: {
+    marginVertical: 10,
     flex: 1,
     zIndex: 1,
   },
   textContainer: {
-    flex: 7,
+    flex: 6,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     color: COLORS.BLACK,
   },
   buttonContainer: {
-    flex: 2,
+    flex: 1,
   },
 });
 

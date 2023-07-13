@@ -34,13 +34,17 @@ const options = [
   {label: '8', value: 9},
 ];
 
-type FormDataInfo = {
+type FormData = {
   fixedPart: string;
   variablePart: string;
 };
 
 const HomeScreen = ({navigation}) => {
-  const {control, handleSubmit, watch} = useForm<FormDataInfo>({
+  const [open, setOpen] = useState(false);
+  const [digits, setDigits] = useState(1);
+  const [items, setItems] = useState(options);
+
+  const {control, handleSubmit, watch} = useForm<FormData>({
     mode: 'onChange',
     resolver: yupResolver(qrValueSchema),
     defaultValues: {
@@ -49,22 +53,19 @@ const HomeScreen = ({navigation}) => {
     },
   });
 
-  const [open, setOpen] = useState(false);
-  const [digits, setDigits] = useState(1);
-  const [items, setItems] = useState(options);
+  const fixedPart = watch('fixedPart');
+  const variablePart = watch('variablePart');
 
-  const onSubmit: SubmitHandler<FormDataInfo> = (data: FormDataInfo) => {
+  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
     navigation.navigate(SCREENS.QR_CODE, {
       fixedValue: data.fixedPart,
-      variableValue: zeroPaddiong(data.variablePart, digits),
+      variableValue:
+        data.variablePart !== '' ? zeroPaddiong(data.variablePart, digits) : '',
       digits: digits,
     });
   };
-  const onError: SubmitErrorHandler<FormDataInfo> = (errors: any, e: any) =>
+  const onError: SubmitErrorHandler<FormData> = (errors: any, e: any) =>
     console.log(errors, e);
-
-  const fixedPart = watch('fixedPart');
-  const variablePart = watch('variablePart');
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -73,8 +74,8 @@ const HomeScreen = ({navigation}) => {
           <Input
             control={control as unknown as Control<FieldValues>}
             areaName="fixedPart"
-            label="メールアドレス"
-            placeholder="メールアドレス"
+            label="Fixed Part"
+            placeholder="Fixed Part"
             autoCompleteType="email"
             autoCapitalize="none"
             style={styles.input}
@@ -82,22 +83,25 @@ const HomeScreen = ({navigation}) => {
           <Input
             control={control as unknown as Control<FieldValues>}
             areaName="variablePart"
-            label="メールアドレス"
-            placeholder="メールアドレス"
-            autoCompleteType="email"
+            label="Variable Part"
+            placeholder="Variable Part"
+            autoCompleteType="number"
             autoCapitalize="none"
+            keyboardType="numeric"
             style={styles.input}
           />
-        </View>
-        <View style={styles.dropDownContaier}>
-          <DropDown
-            open={open}
-            value={digits}
-            items={items}
-            setOpen={setOpen}
-            setValue={setDigits}
-            setItems={setItems}
-          />
+          <View style={styles.dropDownContaier}>
+            <DropDown
+              open={open}
+              value={digits}
+              items={items}
+              setOpen={setOpen}
+              setValue={setDigits}
+              setItems={setItems}
+              error={digits < variablePart.length}
+              errorMessage="Please input digits less than variable part."
+            />
+          </View>
         </View>
         <View style={styles.textContainer}>
           {variablePart !== '' && (
@@ -114,6 +118,7 @@ const HomeScreen = ({navigation}) => {
         </View>
         <View style={styles.buttonContainer}>
           <Button
+            disabled={digits < variablePart.length}
             text="Start Generate"
             onClick={() => {
               handleSubmit(onSubmit, onError)();

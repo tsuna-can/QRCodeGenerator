@@ -39,10 +39,12 @@ const Input: React.FC<Props> = ({
             onBlur={onBlur}
             onChangeText={onChange}
           />
-          {errors[name] && (
+          {errors[name] ? (
             <Text style={styles.text}>
               {(errors[name] as DeepMap<FieldValues, FieldError>)?.message}
             </Text>
+          ) : (
+            <Text style={styles.text}></Text>
           )}
         </View>
       )}

@@ -8,6 +8,9 @@ const styles = StyleSheet.create({
   dropDownContainer: {
     borderColor: COLORS.GRAY,
   },
+  errorMessage: {
+    color: COLORS.RED,
+  },
 });
 
 export default styles;
