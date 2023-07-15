@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
-import {ListItem as RNEListItem, Divider} from '@rneui/themed';
+import {TouchableOpacity} from 'react-native';
+import {ListItem as RNEListItem} from '@rneui/themed';
 import COLORS from '../../theme/colors';
 import {Icon} from '@rneui/base';
 import styles from './listItem.style';

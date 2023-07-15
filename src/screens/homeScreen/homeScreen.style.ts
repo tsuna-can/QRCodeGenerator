@@ -23,6 +23,16 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 1,
   },
+  saveButtonContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  saveButton: {
+    backgroundColor: COLORS.ORANGE,
+    borderRadius: 10,
+  },
   textContainer: {
     flex: 6,
     alignItems: 'center',

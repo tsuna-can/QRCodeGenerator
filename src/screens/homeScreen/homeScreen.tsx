@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Button from '../../components/button/button';
 import styles from './homeScreen.style';
-import {SCREENS} from '../../utils/constants';
+import {SCREENS, MMKV_KEYS} from '../../utils/constants';
 import {zeroPaddiong, calcMaxValue} from '../../utils/padding';
 import {
   useForm,
@@ -21,6 +21,9 @@ import DropDown from '../../components/dropDown/dropDown';
 import Input from '../../components/input/input';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {qrValueSchema} from '../../utils/validation';
+import {useMMKVObject} from 'react-native-mmkv';
+import type {HomeScreenProps} from '../../App';
+import type {initialVaue} from '../../types';
 
 const options = [
   {label: '1', value: 1},
@@ -39,22 +42,48 @@ type FormData = {
   variablePart: string;
 };
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const [open, setOpen] = useState(false);
-  const [digits, setDigits] = useState(1);
+  const [digits, setDigits] = useState(route.params.digits);
   const [items, setItems] = useState(options);
+  const [savedInitialValue, setsavedInitialValue] = useMMKVObject<
+    initialVaue[]
+  >(MMKV_KEYS.INITIAL_VALUES);
 
-  const {control, handleSubmit, watch} = useForm<FormData>({
+  const {control, handleSubmit, watch, setValue} = useForm<FormData>({
     mode: 'onChange',
     resolver: yupResolver(qrValueSchema),
     defaultValues: {
-      fixedPart: '',
-      variablePart: '',
+      fixedPart: route.params.fixedValue,
+      variablePart: route.params.variableValue,
     },
   });
 
   const fixedPart = watch('fixedPart');
   const variablePart = watch('variablePart');
+
+  useEffect(() => {
+    setValue('fixedPart', route.params.fixedValue);
+    setValue('variablePart', route.params.variableValue);
+    setDigits(route.params.digits);
+  }, [route, setValue]);
+
+  const onSave = (
+    currentSavedInitialValues: initialVaue[],
+    newFixedPart: string,
+    newVariablePart: string,
+    newDigits: number,
+  ) => {
+    const newSavedInitialValues = [
+      ...currentSavedInitialValues,
+      {
+        fixedValue: newFixedPart,
+        valirableValue: newVariablePart,
+        digits: newDigits,
+      },
+    ];
+    setsavedInitialValue(newSavedInitialValues);
+  };
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
     navigation.navigate(SCREENS.QR_CODE, {
@@ -102,6 +131,18 @@ const HomeScreen = ({navigation}) => {
               errorMessage="Please input digits less than variable part."
             />
           </View>
+        </View>
+        <View style={styles.saveButtonContainer}>
+          <Button
+            text="Use saved values"
+            onClick={() => navigation.navigate(SCREENS.LIST)}
+          />
+          <Button
+            text="Save values"
+            onClick={() =>
+              onSave(savedInitialValue || [], fixedPart, variablePart, digits)
+            }
+          />
         </View>
         <View style={styles.textContainer}>
           {variablePart !== '' && (

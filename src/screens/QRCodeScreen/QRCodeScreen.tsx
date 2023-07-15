@@ -3,14 +3,11 @@ import {View, Text, SafeAreaView} from 'react-native';
 import Button from '../../components/button/button';
 import styles from './QRCodeScreen.style';
 import QRCodeView from '../../components/QRCodeView/QRCodeView';
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
-import type {RootStackParamList} from '../../App';
+import type {QRCodeScreenProps} from '../../App';
 import {zeroPaddiong, calcMaxValue, calcMinValue} from '../../utils/padding';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'QRCode'>;
-
-const QRCodeScreen = ({navigation, route}: Props) => {
+const QRCodeScreen = ({navigation, route}: QRCodeScreenProps) => {
   const fixedValue = useRef(route.params.fixedValue);
   const [variableValue, setVariableValue] = useState(
     route.params.variableValue,
