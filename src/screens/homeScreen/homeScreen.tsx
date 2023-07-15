@@ -24,6 +24,7 @@ import {qrValueSchema} from '../../utils/validation';
 import {useMMKVObject} from 'react-native-mmkv';
 import type {HomeScreenProps} from '../../App';
 import type {initialVaue} from '../../types';
+import Toast from 'react-native-toast-message';
 
 const options = [
   {label: '1', value: 1},
@@ -93,8 +94,19 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
       digits: digits,
     });
   };
+
   const onError: SubmitErrorHandler<FormData> = (errors: any, e: any) =>
     console.log(errors, e);
+
+  const showTost = () => {
+    Toast.show({
+      type: 'success',
+      position: 'bottom',
+      text1: 'Saved successfully',
+      visibilityTime: 2000,
+      autoHide: true,
+    });
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -139,9 +151,10 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           />
           <Button
             text="Save values"
-            onClick={() =>
-              onSave(savedInitialValue || [], fixedPart, variablePart, digits)
-            }
+            onClick={() => {
+              onSave(savedInitialValue || [], fixedPart, variablePart, digits);
+              showTost();
+            }}
           />
         </View>
         <View style={styles.textContainer}>
@@ -166,6 +179,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
             }}
           />
         </View>
+        <Toast />
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
