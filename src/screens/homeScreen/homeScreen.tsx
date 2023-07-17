@@ -25,6 +25,8 @@ import {useMMKVObject} from 'react-native-mmkv';
 import type {HomeScreenProps} from '../../App';
 import type {initialVaue} from '../../types';
 import Toast from 'react-native-toast-message';
+import {Icon} from '@rneui/base';
+import COLORS from '../../theme/colors';
 
 const options = [
   {label: '1', value: 1},
@@ -41,6 +43,26 @@ const options = [
 type FormData = {
   fixedPart: string;
   variablePart: string;
+};
+
+const showSuccessTost = () => {
+  Toast.show({
+    type: 'success',
+    position: 'bottom',
+    text1: 'Saved successfully',
+    visibilityTime: 2000,
+    autoHide: true,
+  });
+};
+
+const showErrorTost = () => {
+  Toast.show({
+    type: 'error',
+    position: 'bottom',
+    text1: 'One of the fields must be filled in.',
+    visibilityTime: 2000,
+    autoHide: true,
+  });
 };
 
 const HomeScreen = ({navigation, route}: HomeScreenProps) => {
@@ -75,15 +97,20 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     newVariablePart: string,
     newDigits: number,
   ) => {
-    const newSavedInitialValues = [
-      ...currentSavedInitialValues,
-      {
-        fixedValue: newFixedPart,
-        valirableValue: newVariablePart,
-        digits: newDigits,
-      },
-    ];
-    setsavedInitialValue(newSavedInitialValues);
+    if (newFixedPart === '' && newVariablePart === '') {
+      showErrorTost();
+    } else {
+      const newSavedInitialValues = [
+        ...currentSavedInitialValues,
+        {
+          fixedValue: newFixedPart,
+          valirableValue: newVariablePart,
+          digits: newDigits,
+        },
+      ];
+      setsavedInitialValue(newSavedInitialValues);
+      showSuccessTost();
+    }
   };
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
@@ -97,16 +124,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
 
   const onError: SubmitErrorHandler<FormData> = (errors: any, e: any) =>
     console.log(errors, e);
-
-  const showTost = () => {
-    Toast.show({
-      type: 'success',
-      position: 'bottom',
-      text1: 'Saved successfully',
-      visibilityTime: 2000,
-      autoHide: true,
-    });
-  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -146,15 +163,19 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
         </View>
         <View style={styles.saveButtonContainer}>
           <Button
-            text="Use saved values"
-            onClick={() => navigation.navigate(SCREENS.LIST)}
-          />
-          <Button
-            text="Save values"
+            text="Save"
             onClick={() => {
               onSave(savedInitialValue || [], fixedPart, variablePart, digits);
-              showTost();
             }}
+            color={COLORS.GRAY}
+            style={styles.saveButton}
+            icon={
+              <Icon
+                type="material-community"
+                name="bookmark-plus"
+                color="white"
+              />
+            }
           />
         </View>
         <View style={styles.textContainer}>
@@ -169,6 +190,13 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
               </Text>
             </View>
           )}
+        </View>
+        <View style={styles.useSavedButtonContainer}>
+          <Button
+            text="Use saved data"
+            onClick={() => navigation.navigate(SCREENS.LIST)}
+            icon={<Icon type="material" name="storage" color="white" />}
+          />
         </View>
         <View style={styles.buttonContainer}>
           <Button

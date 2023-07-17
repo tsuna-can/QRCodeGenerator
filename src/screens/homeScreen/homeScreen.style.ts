@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   saveButton: {
-    backgroundColor: COLORS.ORANGE,
-    borderRadius: 10,
+    flex: 0.8,
+    alignSelf: 'flex-end',
   },
   textContainer: {
-    flex: 6,
+    flex: 4,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
   tildeText: {
     fontSize: FONT_SIZES.medium,
     color: COLORS.BLACK,
+  },
+  useSavedButtonContainer: {
+    flex: 1,
   },
   buttonContainer: {
     flex: 1,
