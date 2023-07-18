@@ -7,7 +7,7 @@ import ListItem from '../../components/listItem/listItem';
 import type {initialVaue} from '../../types';
 
 const InitialValueListScreen = ({navigation}) => {
-  const [savedInitialValue, setsavedInitialValue] = useMMKVObject<
+  const [savedInitialValue, setSavedInitialValue] = useMMKVObject<
     initialVaue[]
   >(MMKV_KEYS.INITIAL_VALUES);
 
@@ -26,7 +26,7 @@ const InitialValueListScreen = ({navigation}) => {
     const newSavedInitialValue = savedInitialValue.filter(
       (item, itemIndex) => itemIndex !== index,
     );
-    setsavedInitialValue(newSavedInitialValue);
+    setSavedInitialValue(newSavedInitialValue);
   };
 
   return (

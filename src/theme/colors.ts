@@ -7,6 +7,7 @@ const COLORS = {
   BLACK: 'black',
   ORANGE: '#f4511e',
   GRAY: '#808080',
+  YELLOW: '#f1c40f',
 };
 
 export default COLORS;

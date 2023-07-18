@@ -34,10 +34,6 @@ const options = [
   {label: '3', value: 3},
   {label: '4', value: 4},
   {label: '5', value: 5},
-  {label: '6', value: 6},
-  {label: '7', value: 7},
-  {label: '8', value: 8},
-  {label: '8', value: 9},
 ];
 
 type FormData = {
@@ -163,19 +159,12 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
         </View>
         <View style={styles.saveButtonContainer}>
           <Button
-            text="Save"
             onClick={() => {
               onSave(savedInitialValue || [], fixedPart, variablePart, digits);
             }}
-            color={COLORS.GRAY}
-            style={styles.saveButton}
-            icon={
-              <Icon
-                type="material-community"
-                name="bookmark-plus"
-                color="white"
-              />
-            }
+            color={COLORS.WHITE}
+            buttonStyle={styles.saveButton}
+            icon={<Icon type="material-community" name="star" color="orange" />}
           />
         </View>
         <View style={styles.textContainer}>
@@ -191,17 +180,19 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
             </View>
           )}
         </View>
-        <View style={styles.useSavedButtonContainer}>
+        <View style={styles.storageButtonContainer}>
           <Button
-            text="Use saved data"
+            buttonStyle={styles.storageButton}
+            color={COLORS.WHITE}
             onClick={() => navigation.navigate(SCREENS.LIST)}
-            icon={<Icon type="material" name="storage" color="white" />}
+            icon={<Icon type="material" name="storage" color="black" />}
           />
         </View>
-        <View style={styles.buttonContainer}>
+        <View style={styles.generateButtonContainer}>
           <Button
             disabled={digits < variablePart.length}
             text="Start Generate"
+            buttonStyle={styles.generateButton}
             onClick={() => {
               handleSubmit(onSubmit, onError)();
             }}

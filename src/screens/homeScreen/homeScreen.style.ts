@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
   },
   saveButtonContainer: {
     flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    flexDirection: 'row',
   },
   saveButton: {
-    flex: 0.8,
+    height: 45,
+    width: 45,
     alignSelf: 'flex-end',
+    borderRadius: 100,
+    elevation: 4,
   },
   textContainer: {
     flex: 4,
@@ -51,10 +51,20 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.medium,
     color: COLORS.BLACK,
   },
-  useSavedButtonContainer: {
+  storageButtonContainer: {
     flex: 1,
   },
-  buttonContainer: {
+  storageButton: {
+    height: 50,
+    width: 50,
+    borderRadius: 100,
+    alignSelf: 'flex-end',
+    elevation: 4,
+  },
+  generateButtonContainer: {
+    flex: 1,
+  },
+  generateButton: {
     flex: 1,
   },
 });

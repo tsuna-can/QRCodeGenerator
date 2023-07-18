@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button as RNEButton} from '@rneui/themed';
-import {styles as defaultStyles} from './button.styles';
+import styles from './button.styles';
 
 type Props = {
   onClick: () => void;
@@ -9,7 +9,8 @@ type Props = {
   icon?: JSX.Element;
   type?: 'solid' | 'outline' | 'clear';
   color?: string;
-  style?: object;
+  buttonStyle?: object;
+  containerStyle?: object;
 };
 
 const Button: React.FC<Props> = ({
@@ -19,16 +20,17 @@ const Button: React.FC<Props> = ({
   icon,
   type = 'solid',
   color = 'primary',
-  style = {},
+  buttonStyle = {},
+  containerStyle = {},
 }: Props) => {
   return (
     <>
       <RNEButton
         onPress={onClick}
         disabled={disabled}
-        buttonStyle={{...defaultStyles.button, ...style}}
+        buttonStyle={{...styles.button, ...buttonStyle}}
         color={color}
-        containerStyle={defaultStyles.container}
+        containerStyle={{...styles.container, ...containerStyle}}
         type={type}
         icon={icon}
         iconPosition="right">
