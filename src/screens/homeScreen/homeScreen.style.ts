@@ -8,13 +8,11 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   inputContainer: {
-    flex: 4,
+    flex: 6,
   },
   input: {
     backgroundColor: COLORS.WHITE,
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: COLORS.GRAY,
     paddingLeft: 10,
     marginVertical: 10,
   },
@@ -31,10 +29,10 @@ const styles = StyleSheet.create({
     width: 45,
     alignSelf: 'flex-end',
     borderRadius: 100,
-    elevation: 4,
+    elevation: 2,
   },
   textContainer: {
-    flex: 4,
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 100,
     alignSelf: 'flex-end',
-    elevation: 4,
+    elevation: 2,
   },
   generateButtonContainer: {
     flex: 1,

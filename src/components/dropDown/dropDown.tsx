@@ -12,6 +12,7 @@ type Props = {
   setItems: Dispatch<SetStateAction<{label: string; value: number | number}[]>>;
   error?: boolean;
   errorMessage?: string;
+  label?: string;
 };
 
 const DropDown = ({
@@ -23,9 +24,11 @@ const DropDown = ({
   setItems,
   error = false,
   errorMessage = '',
+  label = '',
 }: Props) => {
   return (
     <>
+      <Text style={styles.label}>{label}</Text>
       <DropDownPicker
         open={open}
         setOpen={setOpen}
@@ -34,7 +37,7 @@ const DropDown = ({
         items={items}
         setItems={setItems}
         listMode="SCROLLVIEW"
-        style={styles.style}
+        style={styles.dropDownStyle}
         dropDownContainerStyle={styles.dropDownContainer}
       />
       <View>

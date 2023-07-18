@@ -32,7 +32,8 @@ const Input: React.FC<Props> = ({
         field: {onChange, value, onBlur, name},
         formState: {errors},
       }) => (
-        <View>
+        <View style={styles.container}>
+          <Text style={styles.label}>{props.label}</Text>
           <TextInput
             style={styles.text}
             {...props}

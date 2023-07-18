@@ -153,6 +153,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
               setValue={setDigits}
               setItems={setItems}
               error={digits < variablePart.length}
+              label={'Digits for variable part'}
               errorMessage="Please input digits less than variable part."
             />
           </View>
