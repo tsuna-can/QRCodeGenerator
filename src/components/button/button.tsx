@@ -7,6 +7,10 @@ type Props = {
   text?: string;
   disabled?: boolean;
   icon?: JSX.Element;
+  type?: 'solid' | 'outline' | 'clear';
+  color?: string;
+  buttonStyle?: object;
+  containerStyle?: object;
 };
 
 const Button: React.FC<Props> = ({
@@ -14,15 +18,22 @@ const Button: React.FC<Props> = ({
   text = '',
   disabled = false,
   icon,
+  type = 'solid',
+  color = 'primary',
+  buttonStyle = {},
+  containerStyle = {},
 }: Props) => {
   return (
     <>
       <RNEButton
         onPress={onClick}
         disabled={disabled}
-        buttonStyle={styles.button}
-        containerStyle={styles.container}
-        icon={icon}>
+        buttonStyle={{...styles.button, ...buttonStyle}}
+        color={color}
+        containerStyle={{...styles.container, ...containerStyle}}
+        type={type}
+        icon={icon}
+        iconPosition="right">
         {text}
       </RNEButton>
     </>

@@ -32,19 +32,21 @@ const Input: React.FC<Props> = ({
         field: {onChange, value, onBlur, name},
         formState: {errors},
       }) => (
-        <View>
+        <View style={styles.container}>
+          <Text style={styles.label}>{props.label}</Text>
           <TextInput
+            style={styles.text}
             {...props}
             value={value || ''}
             onBlur={onBlur}
             onChangeText={onChange}
           />
           {errors[name] ? (
-            <Text style={styles.text}>
+            <Text style={styles.errorText}>
               {(errors[name] as DeepMap<FieldValues, FieldError>)?.message}
             </Text>
           ) : (
-            <Text style={styles.text}></Text>
+            <Text style={styles.errorText}></Text>
           )}
         </View>
       )}
