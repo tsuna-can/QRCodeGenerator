@@ -7,7 +7,7 @@ import type {QRCodeScreenProps} from '../../App';
 import {zeroPaddiong, calcMaxValue, calcMinValue} from '../../utils/padding';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const QRCodeScreen = ({navigation, route}: QRCodeScreenProps) => {
+const QRCodeScreen = ({route}: QRCodeScreenProps) => {
   const fixedValue = useRef(route.params.fixedValue);
   const [variableValue, setVariableValue] = useState(
     route.params.variableValue,
