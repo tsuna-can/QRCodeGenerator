@@ -46,7 +46,7 @@ const Input: React.FC<Props> = ({
               {(errors[name] as DeepMap<FieldValues, FieldError>)?.message}
             </Text>
           ) : (
-            <Text style={styles.errorText}></Text>
+            <Text style={styles.errorText} />
           )}
         </View>
       )}
