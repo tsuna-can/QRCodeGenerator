@@ -12,5 +12,6 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
-  }
+  },
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

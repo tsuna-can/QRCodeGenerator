@@ -78,8 +78,8 @@ android {
         applicationId "com.quickqrcodegenerator"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 100
+        versionName "1.0.0"
     }
     signingConfigs {
         debug {
@@ -92,6 +92,11 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${parent.name}_${variant.buildType.name}_${defaultConfig.versionName}.apk"
+                }
+            }
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
