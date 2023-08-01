@@ -1,51 +1,46 @@
-import React, {useState, useRef, useMemo} from 'react';
+import React, {useState, useMemo, useContext} from 'react';
 import {View, Text, SafeAreaView} from 'react-native';
 import Button from '../../components/button/button';
 import styles from './QRCodeScreen.style';
 import QRCodeView from '../../components/QRCodeView/QRCodeView';
-import type {QRCodeScreenProps} from '../../App';
 import {zeroPaddiong, calcMaxValue, calcMinValue} from '../../utils/padding';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {InitialValueContext} from '../../contexts/initialValueContext';
 
-const QRCodeScreen = ({route}: QRCodeScreenProps) => {
-  const fixedValue = useRef(route.params.fixedValue);
-  const [variableValue, setVariableValue] = useState(
-    route.params.variableValue,
+const QRCodeScreen = () => {
+  const {fixedPart, variablePart, digits} = useContext(InitialValueContext);
+  const [variablePartState, setVariablePartState] = useState(
+    variablePart ? zeroPaddiong(variablePart, digits) : '',
   );
-  const digits = useRef(route.params.digits);
 
-  const minValue = useMemo(() => calcMinValue(digits.current), [digits]);
-  const lastValue = useMemo(() => calcMaxValue(digits.current), [digits]);
+  const minValue = useMemo(() => calcMinValue(digits), [digits]);
+  const lastValue = useMemo(() => calcMaxValue(digits), [digits]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textContainer}>
-        <Text
-          style={styles.text}>{`${fixedValue.current}${variableValue}`}</Text>
+        <Text style={styles.text}>{`${fixedPart}${variablePartState}`}</Text>
       </View>
       <View style={styles.qrCodeContainer}>
-        <QRCodeView
-          value={`${fixedValue.current}${variableValue}`}
-          size={250}
-        />
+        <QRCodeView value={`${fixedPart}${variablePartState}`} size={250} />
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          disabled={variableValue === '' || variableValue === minValue}
+          disabled={variablePartState === '' || variablePartState === minValue}
           onClick={() => {
-            setVariableValue(curr => {
+            setVariablePartState(curr => {
               const next = Math.max(Number(curr) - 1, 0);
-              return zeroPaddiong(next.toString(), digits.current);
+              return zeroPaddiong(next.toString(), digits);
             });
           }}
           icon={<Icon name="arrow-left" size={50} color="white" />}
         />
         <Button
-          disabled={variableValue === '' || variableValue === lastValue}
+          disabled={variablePartState === '' || variablePartState === lastValue}
           onClick={() => {
-            setVariableValue(curr => {
+            setVariablePartState(curr => {
               const next = Math.min(Number(curr) + 1, Number(lastValue));
-              return zeroPaddiong(next.toString(), digits.current);
+              return zeroPaddiong(next.toString(), digits);
             });
           }}
           icon={<Icon name="arrow-right" size={50} color="white" />}
