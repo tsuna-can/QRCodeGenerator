@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useContext, useCallback} from 'react';
 import {
   View,
   Text,
@@ -22,11 +22,14 @@ import Input from '../../components/input/input';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {qrValueSchema} from '../../utils/validation';
 import {useMMKVObject} from 'react-native-mmkv';
-import type {HomeScreenProps} from '../../App';
+import type {RootStackParamList} from '../../App';
 import type {initialVaue} from '../../types';
 import Toast from 'react-native-toast-message';
 import {Icon} from '@rneui/base';
 import COLORS from '../../theme/colors';
+import {InitialValueContext} from '../../contexts/initialValueContext';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const options = [
   {label: '1', value: 1},
@@ -41,7 +44,7 @@ type FormData = {
   variablePart: string;
 };
 
-const showSuccessTost = () => {
+const showSuccessToast = () => {
   Toast.show({
     type: 'success',
     position: 'bottom',
@@ -51,7 +54,7 @@ const showSuccessTost = () => {
   });
 };
 
-const showErrorTost = () => {
+const showErrorToast = () => {
   Toast.show({
     type: 'error',
     position: 'bottom',
@@ -61,9 +64,18 @@ const showErrorTost = () => {
   });
 };
 
-const HomeScreen = ({navigation, route}: HomeScreenProps) => {
+const HomeScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
+  const {
+    fixedPart,
+    setFixedPart,
+    variablePart,
+    setVariablePart,
+    digits,
+    setDigits,
+  } = useContext(InitialValueContext);
   const [open, setOpen] = useState(false);
-  const [digits, setDigits] = useState(route.params.digits);
   const [items, setItems] = useState(options);
   const [savedInitialValue, setsavedInitialValue] = useMMKVObject<
     initialVaue[]
@@ -73,52 +85,47 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     mode: 'onChange',
     resolver: yupResolver(qrValueSchema),
     defaultValues: {
-      fixedPart: route.params.fixedValue,
-      variablePart: route.params.variableValue,
+      fixedPart: '',
+      variablePart: '',
     },
   });
 
-  const fixedPart = watch('fixedPart');
-  const variablePart = watch('variablePart');
+  const fixedPartState = watch('fixedPart');
+  const variablePartState = watch('variablePart');
 
-  useEffect(() => {
-    setValue('fixedPart', route.params.fixedValue);
-    setValue('variablePart', route.params.variableValue);
-    setDigits(route.params.digits);
-  }, [route, setValue]);
+  useFocusEffect(
+    useCallback(() => {
+      setValue('fixedPart', fixedPart);
+      setValue('variablePart', variablePart);
+    }, [setValue, fixedPart, variablePart]),
+  );
 
-  const onSave = (
-    currentSavedInitialValues: initialVaue[],
-    newFixedPart: string,
-    newVariablePart: string,
-    newDigits: number,
-  ) => {
-    if (newFixedPart === '' && newVariablePart === '') {
-      showErrorTost();
-    } else {
-      const newSavedInitialValues = [
-        ...currentSavedInitialValues,
-        {
-          fixedValue: newFixedPart,
-          valirableValue: newVariablePart,
-          digits: newDigits,
-        },
-      ];
-      setsavedInitialValue(newSavedInitialValues);
-      showSuccessTost();
-    }
+  const onSave: SubmitHandler<FormData> = (data: FormData) => {
+    const newValues = {
+      fixedValue: data.fixedPart,
+      valirableValue: data.variablePart,
+      digits: digits,
+    };
+    const newSavedInitialValues = savedInitialValue
+      ? savedInitialValue.concat(newValues)
+      : [newValues];
+    setsavedInitialValue(newSavedInitialValues);
+    showSuccessToast();
+  };
+
+  const onSaveError: SubmitErrorHandler<FormData> = (errors: any, e: any) => {
+    console.log(errors, e);
+    showErrorToast();
   };
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
-    navigation.navigate(SCREENS.QR_CODE, {
-      fixedValue: data.fixedPart,
-      variableValue:
-        data.variablePart !== '' ? zeroPaddiong(data.variablePart, digits) : '',
-      digits: digits,
-    });
+    setFixedPart(data.fixedPart);
+    setVariablePart(data.variablePart);
+    setDigits(digits);
+    navigation.navigate(SCREENS.QR_CODE);
   };
 
-  const onError: SubmitErrorHandler<FormData> = (errors: any, e: any) =>
+  const onSubmitError: SubmitErrorHandler<FormData> = (errors: any, e: any) =>
     console.log(errors, e);
 
   return (
@@ -152,7 +159,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
               setOpen={setOpen}
               setValue={setDigits}
               setItems={setItems}
-              error={digits < variablePart.length}
+              error={digits < variablePartState.length}
               label={'Digits for variable part'}
               errorMessage="Please input digits less than variable part."
             />
@@ -161,7 +168,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
         <View style={styles.saveButtonContainer}>
           <Button
             onClick={() => {
-              onSave(savedInitialValue || [], fixedPart, variablePart, digits);
+              handleSubmit(onSave, onSaveError)();
             }}
             color={COLORS.WHITE}
             buttonStyle={styles.saveButton}
@@ -169,14 +176,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           />
         </View>
         <View style={styles.textContainer}>
-          {variablePart !== '' && (
+          {variablePartState !== '' && (
             <View style={styles.fromToContainer}>
               <Text style={styles.fromToText}>
-                {`${fixedPart}${zeroPaddiong(variablePart, digits)}`}
+                {`${fixedPartState}${zeroPaddiong(variablePartState, digits)}`}
               </Text>
               <Text style={styles.tildeText}>~</Text>
               <Text style={styles.fromToText}>
-                {`${fixedPart}${calcMaxValue(digits)}`}
+                {`${fixedPartState}${calcMaxValue(digits)}`}
               </Text>
             </View>
           )}
@@ -191,11 +198,11 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
         </View>
         <View style={styles.generateButtonContainer}>
           <Button
-            disabled={digits < variablePart.length}
+            disabled={digits < variablePartState.length}
             text="Start Generate"
             buttonStyle={styles.generateButton}
             onClick={() => {
-              handleSubmit(onSubmit, onError)();
+              handleSubmit(onSubmit, onSubmitError)();
             }}
           />
         </View>
