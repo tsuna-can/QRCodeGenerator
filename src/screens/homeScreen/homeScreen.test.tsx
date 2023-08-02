@@ -1,23 +1,23 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import HomeScreen from './homeScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../App';
+import {SCREENS} from '../../utils/constants';
 
-const navigation = {
-  navigate: jest.fn(),
-};
-
-const route = {
-  params: {
-    fixedValue: '',
-    variableValue: '',
-    digits: 1,
-  },
-};
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 describe('HomeScreen', () => {
   it('renders correctly', () => {
     const tree = renderer
-      .create(<HomeScreen navigation={navigation} route={route} />)
+      .create(
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name={SCREENS.HOME} component={HomeScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>,
+      )
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
