@@ -1,4 +1,4 @@
-import React, {useState, createContext, useCallback} from 'react';
+import React, {useState, createContext, useCallback, useMemo} from 'react';
 
 type initialValueContextType = {
   digits: number;
@@ -20,7 +20,8 @@ export const InitialValueContext = createContext<initialValueContextType>({
   resetValues: () => {},
 });
 
-export const InitialValueProvider = ({children}: any) => {
+// TODO prevent meaningless re-rendering
+export const InitialValueProvider = ({children}: {children: JSX.Element}) => {
   const [digits, setDigits] = useState(0);
   const [fixedPart, setFixedPart] = useState('');
   const [variablePart, setVariablePart] = useState('');
@@ -31,18 +32,20 @@ export const InitialValueProvider = ({children}: any) => {
     setVariablePart('');
   }, []);
 
-  return (
-    <InitialValueContext.Provider
-      value={{
-        digits,
-        setDigits,
-        fixedPart,
-        setFixedPart,
-        variablePart,
-        setVariablePart,
-        resetValues,
-      }}>
-      {children}
-    </InitialValueContext.Provider>
-  );
+  return useMemo(() => {
+    return (
+      <InitialValueContext.Provider
+        value={{
+          digits,
+          setDigits,
+          fixedPart,
+          setFixedPart,
+          variablePart,
+          setVariablePart,
+          resetValues,
+        }}>
+        {children}
+      </InitialValueContext.Provider>
+    );
+  }, [children, digits, fixedPart, variablePart, resetValues]);
 };

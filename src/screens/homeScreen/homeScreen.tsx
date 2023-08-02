@@ -22,13 +22,14 @@ import Input from '../../components/input/input';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {qrValueSchema} from '../../utils/validation';
 import {useMMKVObject} from 'react-native-mmkv';
-import type {HomeScreenProps} from '../../App';
+import type {RootStackParamList} from '../../App';
 import type {initialVaue} from '../../types';
 import Toast from 'react-native-toast-message';
 import {Icon} from '@rneui/base';
 import COLORS from '../../theme/colors';
 import {InitialValueContext} from '../../contexts/initialValueContext';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const options = [
   {label: '1', value: 1},
@@ -64,7 +65,8 @@ const showErrorToast = () => {
 };
 
 const HomeScreen = () => {
-  const navigation = useNavigation<HomeScreenProps['navigation']>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
   const {
     fixedPart,
     setFixedPart,

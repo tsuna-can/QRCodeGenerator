@@ -9,18 +9,13 @@ import QRCodeScreen from './screens/QRCodeScreen/QRCodeScreen';
 import InitialValueListScreen from './screens/initialValueListScreen/initialValueListScreen';
 import {SCREENS} from './utils/constants';
 import COLORS from './theme/colors';
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {InitialValueProvider} from './contexts/initialValueContext';
 
-type RootStackParamList = {
-  [SCREENS.HOME]: {test: string};
+export type RootStackParamList = {
+  [SCREENS.HOME]: undefined;
   [SCREENS.QR_CODE]: undefined;
   [SCREENS.LIST]: undefined;
 };
-export type HomeScreenProps = NativeStackScreenProps<
-  RootStackParamList,
-  'Home'
->;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

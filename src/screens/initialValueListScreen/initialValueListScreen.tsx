@@ -7,9 +7,12 @@ import ListItem from '../../components/listItem/listItem';
 import type {initialVaue} from '../../types';
 import {InitialValueContext} from '../../contexts/initialValueContext';
 import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../App';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const InitialValueListScreen = () => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'List'>>();
   const {setFixedPart, setVariablePart, setDigits} =
     useContext(InitialValueContext);
   const [savedInitialValue, setSavedInitialValue] = useMMKVObject<
