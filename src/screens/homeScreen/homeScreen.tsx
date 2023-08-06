@@ -178,12 +178,19 @@ const HomeScreen = () => {
         <View style={styles.textContainer}>
           {variablePartState !== '' && (
             <View style={styles.fromToContainer}>
-              <Text style={styles.fromToText}>
-                {`${fixedPartState}${zeroPaddiong(variablePartState, digits)}`}
+              <Text>
+                <Text style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
+                <Text style={styles.variablePartText}>{`${zeroPaddiong(
+                  variablePartState,
+                  digits,
+                )}`}</Text>
               </Text>
               <Text style={styles.tildeText}>~</Text>
-              <Text style={styles.fromToText}>
-                {`${fixedPartState}${calcMaxValue(digits)}`}
+              <Text>
+                <Text style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
+                <Text style={styles.variablePartText}>
+                  {`${calcMaxValue(digits)}`}
+                </Text>
               </Text>
             </View>
           )}
