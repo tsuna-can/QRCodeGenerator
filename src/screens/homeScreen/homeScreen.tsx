@@ -1,11 +1,5 @@
 import React, {useState, useContext, useCallback} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Keyboard,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import Button from '../../components/button/button';
 import styles from './homeScreen.style';
 import {SCREENS, MMKV_KEYS} from '../../utils/constants';
@@ -129,93 +123,99 @@ const HomeScreen = () => {
     console.log(errors, e);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Input
-            control={control as unknown as Control<FieldValues>}
-            areaName="fixedPart"
-            label="Fixed Part"
-            placeholder="Fixed Part"
-            autoCompleteType="email"
-            autoCapitalize="none"
-            style={styles.input}
-          />
-          <Input
-            control={control as unknown as Control<FieldValues>}
-            areaName="variablePart"
-            label="Variable Part"
-            placeholder="Variable Part"
-            autoCompleteType="number"
-            autoCapitalize="none"
-            keyboardType="numeric"
-            style={styles.input}
-          />
-          <View style={styles.dropDownContaier}>
-            <DropDown
-              open={open}
-              value={digits}
-              items={items}
-              setOpen={setOpen}
-              setValue={setDigits}
-              setItems={setItems}
-              error={digits < variablePartState.length}
-              label={'Digits for variable part'}
-              errorMessage="Please input digits less than variable part."
+    <SafeAreaView style={styles.container}>
+      <View style={styles.scrollContainer}>
+        <ScrollView>
+          <View style={styles.inputContainer}>
+            <Input
+              control={control as unknown as Control<FieldValues>}
+              areaName="fixedPart"
+              label="Fixed Part"
+              placeholder="Fixed Part"
+              autoCompleteType="email"
+              autoCapitalize="none"
+              style={styles.input}
+            />
+            <Input
+              control={control as unknown as Control<FieldValues>}
+              areaName="variablePart"
+              label="Variable Part"
+              placeholder="Variable Part"
+              autoCompleteType="number"
+              autoCapitalize="none"
+              keyboardType="numeric"
+              style={styles.input}
+            />
+            <View style={styles.dropDownContaier}>
+              <DropDown
+                open={open}
+                value={digits}
+                items={items}
+                setOpen={setOpen}
+                setValue={setDigits}
+                setItems={setItems}
+                error={digits < variablePartState.length}
+                label={'Digits for variable part'}
+                errorMessage="Please input digits less than variable part."
+              />
+            </View>
+          </View>
+          <View style={styles.saveButtonContainer}>
+            <Button
+              onClick={() => {
+                handleSubmit(onSave, onSaveError)();
+              }}
+              color={COLORS.WHITE}
+              buttonStyle={styles.saveButton}
+              icon={
+                <Icon type="material-community" name="star" color="orange" />
+              }
             />
           </View>
-        </View>
-        <View style={styles.saveButtonContainer}>
-          <Button
-            onClick={() => {
-              handleSubmit(onSave, onSaveError)();
-            }}
-            color={COLORS.WHITE}
-            buttonStyle={styles.saveButton}
-            icon={<Icon type="material-community" name="star" color="orange" />}
-          />
-        </View>
-        <View style={styles.textContainer}>
-          {variablePartState !== '' && (
-            <View style={styles.fromToContainer}>
-              <Text>
-                <Text style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
-                <Text style={styles.variablePartText}>{`${zeroPaddiong(
-                  variablePartState,
-                  digits,
-                )}`}</Text>
-              </Text>
-              <Text style={styles.tildeText}>~</Text>
-              <Text>
-                <Text style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
-                <Text style={styles.variablePartText}>
-                  {`${calcMaxValue(digits)}`}
+          <View style={styles.textContainer}>
+            {variablePartState !== '' && (
+              <View style={styles.fromToContainer}>
+                <Text>
+                  <Text
+                    style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
+                  <Text style={styles.variablePartText}>{`${zeroPaddiong(
+                    variablePartState,
+                    digits,
+                  )}`}</Text>
                 </Text>
-              </Text>
-            </View>
-          )}
-        </View>
-        <View style={styles.storageButtonContainer}>
-          <Button
-            buttonStyle={styles.storageButton}
-            color={COLORS.WHITE}
-            onClick={() => navigation.navigate(SCREENS.LIST)}
-            icon={<Icon type="material" name="storage" color="black" />}
-          />
-        </View>
-        <View style={styles.generateButtonContainer}>
-          <Button
-            disabled={digits < variablePartState.length}
-            text="Start Generate"
-            buttonStyle={styles.generateButton}
-            onClick={() => {
-              handleSubmit(onSubmit, onSubmitError)();
-            }}
-          />
-        </View>
-        <Toast />
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+                <Text style={styles.tildeText}>~</Text>
+                <Text>
+                  <Text
+                    style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
+                  <Text style={styles.variablePartText}>
+                    {`${calcMaxValue(digits)}`}
+                  </Text>
+                </Text>
+              </View>
+            )}
+          </View>
+          <View style={styles.storageButtonContainer}>
+            <Button
+              buttonStyle={styles.storageButton}
+              color={COLORS.WHITE}
+              onClick={() => navigation.navigate(SCREENS.LIST)}
+              icon={<Icon type="material" name="storage" color="black" />}
+            />
+          </View>
+        </ScrollView>
+      </View>
+      <View style={styles.generateButtonContainer}>
+        <Button
+          disabled={digits < variablePartState.length}
+          text="Start Generate"
+          buttonStyle={styles.generateButton}
+          onClick={() => {
+            handleSubmit(onSubmit, onSubmitError)();
+          }}
+        />
+      </View>
+      <Toast />
+    </SafeAreaView>
   );
 };
 

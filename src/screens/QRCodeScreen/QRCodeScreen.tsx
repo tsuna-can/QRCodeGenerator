@@ -1,5 +1,5 @@
 import React, {useState, useMemo, useContext} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, Text, SafeAreaView, useWindowDimensions} from 'react-native';
 import Button from '../../components/button/button';
 import styles from './QRCodeScreen.style';
 import QRCodeView from '../../components/QRCodeView/QRCodeView';
@@ -22,7 +22,10 @@ const QRCodeScreen = () => {
         <Text style={styles.text}>{`${fixedPart}${variablePartState}`}</Text>
       </View>
       <View style={styles.qrCodeContainer}>
-        <QRCodeView value={`${fixedPart}${variablePartState}`} size={250} />
+        <QRCodeView
+          value={`${fixedPart}${variablePartState}`}
+          size={useWindowDimensions().width * 0.8}
+        />
       </View>
       <View style={styles.buttonContainer}>
         <Button

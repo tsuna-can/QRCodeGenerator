@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
   },
+  scrollContainer: {
+    flex: 10,
+  },
   inputContainer: {
     flex: 6,
   },
@@ -33,11 +36,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   saveButton: {
-    height: 45,
-    width: 45,
+    height: 50,
+    width: 50,
     alignSelf: 'flex-end',
     borderRadius: 100,
-    elevation: 2,
+    elevation: 1,
   },
   textContainer: {
     flex: 3,
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 100,
     alignSelf: 'flex-end',
-    elevation: 2,
+    elevation: 1,
   },
   generateButtonContainer: {
     flex: 1,
