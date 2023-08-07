@@ -2,6 +2,14 @@ import {StyleSheet} from 'react-native';
 import COLORS from '../../theme/colors';
 import {FONT_SIZES} from '../../theme/theme';
 
+const common = StyleSheet.create({
+  fromToText: {
+    fontSize: FONT_SIZES.xLarge,
+    fontWeight: 'bold',
+    color: COLORS.BLACK,
+  },
+});
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -40,14 +48,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fromToText: {
-    fontSize: FONT_SIZES.xLarge,
-    fontWeight: 'bold',
-    color: COLORS.BLACK,
+  fixedPartText: {
+    ...common.fromToText,
+  },
+  variablePartText: {
+    ...common.fromToText,
+    color: COLORS.GRAY,
   },
   tildeText: {
+    ...common.fromToText,
     fontSize: FONT_SIZES.medium,
-    color: COLORS.BLACK,
   },
   storageButtonContainer: {
     flex: 1,

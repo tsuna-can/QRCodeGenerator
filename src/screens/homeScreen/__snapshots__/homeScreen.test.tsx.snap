@@ -33,6 +33,7 @@ exports[`HomeScreen renders correctly 1`] = `
       onAppear={[Function]}
       onDisappear={[Function]}
       onDismissed={[Function]}
+      onGestureCancel={[Function]}
       onHeaderBackButtonClicked={[Function]}
       onNativeDismissCancelled={[Function]}
       onTransitionProgress={[Function]}
