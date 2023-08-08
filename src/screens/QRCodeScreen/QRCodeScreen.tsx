@@ -16,6 +16,30 @@ const QRCodeScreen = () => {
   const minValue = useMemo(() => calcMinValue(digits), [digits]);
   const lastValue = useMemo(() => calcMaxValue(digits), [digits]);
 
+  const onPressLeft = () => {
+    setVariablePartState(curr => {
+      const decremented = Number(curr) - 1;
+      if (digits === 0) {
+        return decremented.toString();
+      } else {
+        const next = Math.max(decremented, 0).toString();
+        return zeroPaddiong(next, digits);
+      }
+    });
+  };
+
+  const onPressRight = () => {
+    setVariablePartState(curr => {
+      const incremented = Number(curr) + 1;
+      if (digits === 0) {
+        return incremented.toString();
+      } else {
+        const next = Math.min(incremented, Number(lastValue)).toString();
+        return zeroPaddiong(next, digits);
+      }
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textContainer}>
@@ -29,23 +53,19 @@ const QRCodeScreen = () => {
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          disabled={variablePartState === '' || variablePartState === minValue}
-          onClick={() => {
-            setVariablePartState(curr => {
-              const next = Math.max(Number(curr) - 1, 0);
-              return zeroPaddiong(next.toString(), digits);
-            });
-          }}
+          disabled={
+            variablePartState === '' ||
+            (digits > 0 && variablePartState === minValue)
+          }
+          onClick={onPressLeft}
           icon={<Icon name="arrow-left" size={50} color="white" />}
         />
         <Button
-          disabled={variablePartState === '' || variablePartState === lastValue}
-          onClick={() => {
-            setVariablePartState(curr => {
-              const next = Math.min(Number(curr) + 1, Number(lastValue));
-              return zeroPaddiong(next.toString(), digits);
-            });
-          }}
+          disabled={
+            variablePartState === '' ||
+            (digits > 0 && variablePartState === lastValue)
+          }
+          onClick={onPressRight}
           icon={<Icon name="arrow-right" size={50} color="white" />}
         />
       </View>

@@ -47,10 +47,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fromToContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   fixedPartText: {
     ...common.fromToText,
   },

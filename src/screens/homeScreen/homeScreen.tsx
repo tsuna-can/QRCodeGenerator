@@ -3,7 +3,7 @@ import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import Button from '../../components/button/button';
 import styles from './homeScreen.style';
 import {SCREENS, MMKV_KEYS} from '../../utils/constants';
-import {zeroPaddiong, calcMaxValue} from '../../utils/padding';
+import {zeroPaddiong} from '../../utils/padding';
 import {
   useForm,
   Control,
@@ -26,11 +26,16 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const options = [
+  {label: 'none', value: 0},
   {label: '1', value: 1},
   {label: '2', value: 2},
   {label: '3', value: 3},
   {label: '4', value: 4},
   {label: '5', value: 5},
+  {label: '6', value: 6},
+  {label: '7', value: 7},
+  {label: '8', value: 8},
+  {label: '9', value: 9},
 ];
 
 type FormData = {
@@ -154,7 +159,7 @@ const HomeScreen = () => {
                 setOpen={setOpen}
                 setValue={setDigits}
                 setItems={setItems}
-                error={digits < variablePartState.length}
+                error={digits > 0 && digits < variablePartState.length}
                 label={'Digits for variable part'}
                 errorMessage="Please input digits less than variable part."
               />
@@ -173,40 +178,27 @@ const HomeScreen = () => {
             />
           </View>
           <View style={styles.textContainer}>
-            {variablePartState !== '' && (
-              <View style={styles.fromToContainer}>
-                <Text>
-                  <Text
-                    style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
-                  <Text style={styles.variablePartText}>{`${zeroPaddiong(
-                    variablePartState,
-                    digits,
-                  )}`}</Text>
-                </Text>
-                <Text style={styles.tildeText}>~</Text>
-                <Text>
-                  <Text
-                    style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
-                  <Text style={styles.variablePartText}>
-                    {`${calcMaxValue(digits)}`}
-                  </Text>
-                </Text>
-              </View>
-            )}
-          </View>
-          <View style={styles.storageButtonContainer}>
-            <Button
-              buttonStyle={styles.storageButton}
-              color={COLORS.WHITE}
-              onClick={() => navigation.navigate(SCREENS.LIST)}
-              icon={<Icon type="material" name="storage" color="black" />}
-            />
+            <Text>
+              <Text style={styles.fixedPartText}>{`${fixedPartState}`}</Text>
+              <Text style={styles.variablePartText}>{`${zeroPaddiong(
+                variablePartState,
+                digits,
+              )}`}</Text>
+            </Text>
           </View>
         </ScrollView>
       </View>
+      <View style={styles.storageButtonContainer}>
+        <Button
+          buttonStyle={styles.storageButton}
+          color={COLORS.WHITE}
+          onClick={() => navigation.navigate(SCREENS.LIST)}
+          icon={<Icon type="material" name="storage" color="black" />}
+        />
+      </View>
       <View style={styles.generateButtonContainer}>
         <Button
-          disabled={digits < variablePartState.length}
+          disabled={digits > 0 && digits < variablePartState.length}
           text="Start Generate"
           buttonStyle={styles.generateButton}
           onClick={() => {

@@ -36,9 +36,14 @@ const DropDown = ({
         setValue={setDigits}
         items={items}
         setItems={setItems}
-        listMode="SCROLLVIEW"
+        closeOnBackPressed={true}
         style={styles.dropDownStyle}
         dropDownContainerStyle={styles.dropDownContainer}
+        listMode="MODAL"
+        modalAnimationType="slide"
+        searchable={false}
+        modalTitle="Zero padding for variable part"
+        modalContentContainerStyle={styles.modalContentContainer}
       />
       <View>
         <Text style={styles.errorMessage}>{error ? errorMessage : ''}</Text>

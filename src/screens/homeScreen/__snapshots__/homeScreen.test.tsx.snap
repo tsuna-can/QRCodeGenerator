@@ -288,12 +288,12 @@ exports[`HomeScreen renders correctly 1`] = `
                                   "flex": 1,
                                 },
                                 {},
-                                false,
                                 {},
+                                false,
                               ]
                             }
                           >
-                            Select an item
+                            none
                           </Text>
                           <View
                             style={
@@ -323,6 +323,13 @@ exports[`HomeScreen renders correctly 1`] = `
                             />
                           </View>
                         </View>
+                        <Modal
+                          animationType="slide"
+                          hardwareAccelerated={false}
+                          onRequestClose={[Function]}
+                          presentationStyle="fullScreen"
+                          visible={false}
+                        />
                       </View>
                       <View>
                         <Text
@@ -484,150 +491,171 @@ exports[`HomeScreen renders correctly 1`] = `
                         "justifyContent": "center",
                       }
                     }
-                  />
+                  >
+                    <Text>
+                      <Text
+                        style={
+                          {
+                            "color": "black",
+                            "fontSize": 28,
+                            "fontWeight": "bold",
+                          }
+                        }
+                      />
+                      <Text
+                        style={
+                          {
+                            "color": "#808080",
+                            "fontSize": 28,
+                            "fontWeight": "bold",
+                          }
+                        }
+                      />
+                    </Text>
+                  </View>
+                </View>
+              </RCTScrollView>
+            </View>
+            <View
+              style={
+                {
+                  "flex": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  [
+                    {
+                      "overflow": "hidden",
+                    },
+                    {
+                      "borderRadius": 2,
+                    },
+                    {
+                      "flex": 1,
+                      "marginHorizontal": 5,
+                      "marginVertical": 5,
+                    },
+                    false,
+                  ]
+                }
+                testID="RNE_BUTTON_WRAPPER"
+              >
+                <View
+                  accessibilityRole="button"
+                  accessibilityState={
+                    {
+                      "busy": false,
+                      "checked": undefined,
+                      "disabled": false,
+                      "expanded": undefined,
+                      "selected": undefined,
+                    }
+                  }
+                  accessibilityValue={
+                    {
+                      "max": undefined,
+                      "min": undefined,
+                      "now": undefined,
+                      "text": undefined,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={true}
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
+                  style={
+                    {
+                      "opacity": 1,
+                    }
+                  }
+                >
                   <View
                     style={
                       {
-                        "flex": 1,
+                        "alignItems": "center",
+                        "alignSelf": "flex-end",
+                        "backgroundColor": "#ffffff",
+                        "borderColor": "#2089dc",
+                        "borderRadius": 100,
+                        "borderWidth": 0,
+                        "elevation": 1,
+                        "flexDirection": "row-reverse",
+                        "height": 50,
+                        "justifyContent": "center",
+                        "padding": 8,
+                        "paddingHorizontal": 10,
+                        "width": 50,
                       }
                     }
                   >
                     <View
                       style={
-                        [
-                          {
-                            "overflow": "hidden",
-                          },
-                          {
-                            "borderRadius": 2,
-                          },
-                          {
-                            "flex": 1,
-                            "marginHorizontal": 5,
-                            "marginVertical": 5,
-                          },
-                          false,
-                        ]
+                        {
+                          "overflow": "hidden",
+                        }
                       }
-                      testID="RNE_BUTTON_WRAPPER"
+                      testID="RNE__ICON__CONTAINER"
                     >
                       <View
                         accessibilityRole="button"
-                        accessibilityState={
+                        android_ripple={
                           {
-                            "busy": false,
-                            "checked": undefined,
-                            "disabled": false,
-                            "expanded": undefined,
-                            "selected": undefined,
+                            "borderless": false,
+                            "color": "rgba(0, 0, 0, 0.3)",
+                            "radius": -5,
                           }
                         }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onClick={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                        style={
-                          {
-                            "opacity": 1,
-                          }
-                        }
+                        disabled={false}
+                        testID="RNE__ICON__CONTAINER_ACTION"
                       >
                         <View
                           style={
                             {
                               "alignItems": "center",
-                              "alignSelf": "flex-end",
-                              "backgroundColor": "#ffffff",
-                              "borderColor": "#2089dc",
-                              "borderRadius": 100,
-                              "borderWidth": 0,
-                              "elevation": 1,
-                              "flexDirection": "row-reverse",
-                              "height": 50,
+                              "backgroundColor": "transparent",
                               "justifyContent": "center",
-                              "padding": 8,
-                              "paddingHorizontal": 10,
-                              "width": 50,
                             }
                           }
+                          testID="RNE__ICON"
                         >
-                          <View
+                          <Text
+                            allowFontScaling={false}
+                            selectable={false}
                             style={
-                              {
-                                "overflow": "hidden",
-                              }
-                            }
-                            testID="RNE__ICON__CONTAINER"
-                          >
-                            <View
-                              accessibilityRole="button"
-                              android_ripple={
+                              [
                                 {
-                                  "borderless": false,
-                                  "color": "rgba(0, 0, 0, 0.3)",
-                                  "radius": -5,
-                                }
-                              }
-                              disabled={false}
-                              testID="RNE__ICON__CONTAINER_ACTION"
-                            >
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "backgroundColor": "transparent",
-                                    "justifyContent": "center",
-                                  }
-                                }
-                                testID="RNE__ICON"
-                              >
-                                <Text
-                                  allowFontScaling={false}
-                                  selectable={false}
-                                  style={
-                                    [
-                                      {
-                                        "color": "black",
-                                        "fontSize": 24,
-                                      },
-                                      {
-                                        "backgroundColor": "transparent",
-                                      },
-                                      {
-                                        "fontFamily": "Material Icons",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "normal",
-                                      },
-                                      {},
-                                    ]
-                                  }
-                                  testID="RNE__ICON__Component"
-                                >
-                                  
-                                </Text>
-                              </View>
-                            </View>
-                          </View>
+                                  "color": "black",
+                                  "fontSize": 24,
+                                },
+                                {
+                                  "backgroundColor": "transparent",
+                                },
+                                {
+                                  "fontFamily": "Material Icons",
+                                  "fontStyle": "normal",
+                                  "fontWeight": "normal",
+                                },
+                                {},
+                              ]
+                            }
+                            testID="RNE__ICON__Component"
+                          >
+                            
+                          </Text>
                         </View>
                       </View>
                     </View>
                   </View>
                 </View>
-              </RCTScrollView>
+              </View>
             </View>
             <View
               style={
