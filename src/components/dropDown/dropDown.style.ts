@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
   label: {
     color: COLORS.BLACK,
   },
+  modalContentContainer: {
+    margin: 5,
+  },
 });
 
 export default styles;
