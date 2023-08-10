@@ -6,6 +6,7 @@ import QRCodeView from '../../components/QRCodeView/QRCodeView';
 import {zeroPaddiong, calcMaxValue, calcMinValue} from '../../utils/padding';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {InitialValueContext} from '../../contexts/initialValueContext';
+import '../../utils/i18n/config';
 
 const QRCodeScreen = () => {
   const {fixedPart, variablePart, digits} = useContext(InitialValueContext);

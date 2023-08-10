@@ -24,6 +24,8 @@ import COLORS from '../../theme/colors';
 import {InitialValueContext} from '../../contexts/initialValueContext';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useTranslation} from 'react-i18next';
+import '../../utils/i18n/config';
 
 const options = [
   {label: 'none', value: 0},
@@ -43,27 +45,28 @@ type FormData = {
   variablePart: string;
 };
 
-const showSuccessToast = () => {
+const showSuccessToast = (message: string) => {
   Toast.show({
     type: 'success',
     position: 'bottom',
-    text1: 'Saved successfully',
+    text1: message,
     visibilityTime: 2000,
     autoHide: true,
   });
 };
 
-const showErrorToast = () => {
+const showErrorToast = (message: string) => {
   Toast.show({
     type: 'error',
     position: 'bottom',
-    text1: 'One of the fields must be filled in.',
+    text1: message,
     visibilityTime: 2000,
     autoHide: true,
   });
 };
 
 const HomeScreen = () => {
+  const {t} = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'Home'>>();
   const {
@@ -109,12 +112,12 @@ const HomeScreen = () => {
       ? savedInitialValue.concat(newValues)
       : [newValues];
     setsavedInitialValue(newSavedInitialValues);
-    showSuccessToast();
+    showSuccessToast(t('HOME.SAVE_SUCCESS'));
   };
 
   const onSaveError: SubmitErrorHandler<FormData> = (errors: any, e: any) => {
     console.log(errors, e);
-    showErrorToast();
+    showErrorToast(t('HOME.SAVE_FAILED'));
   };
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
@@ -135,8 +138,8 @@ const HomeScreen = () => {
             <Input
               control={control as unknown as Control<FieldValues>}
               areaName="fixedPart"
-              label="Fixed Part"
-              placeholder="Fixed Part"
+              label={t('FIXED_PART')}
+              placeholder={t('FIXED_PART')}
               autoCompleteType="email"
               autoCapitalize="none"
               style={styles.input}
@@ -144,8 +147,8 @@ const HomeScreen = () => {
             <Input
               control={control as unknown as Control<FieldValues>}
               areaName="variablePart"
-              label="Variable Part"
-              placeholder="Variable Part"
+              label={t('VARIABLE_PART')}
+              placeholder={t('VARIABLE_PART')}
               autoCompleteType="number"
               autoCapitalize="none"
               keyboardType="numeric"
@@ -160,8 +163,8 @@ const HomeScreen = () => {
                 setValue={setDigits}
                 setItems={setItems}
                 error={digits > 0 && digits < variablePartState.length}
-                label={'Digits for variable part'}
-                errorMessage="Please input digits less than variable part."
+                label={t('HOME.ZERO_PADDING_FOR_VARIABLE_PART')}
+                errorMessage={t('HOME.ZERO_PADDING_ERROR')}
               />
             </View>
           </View>
@@ -199,7 +202,7 @@ const HomeScreen = () => {
       <View style={styles.generateButtonContainer}>
         <Button
           disabled={digits > 0 && digits < variablePartState.length}
-          text="Start Generate"
+          text={t('HOME.GENERATE_BUTTON')}
           buttonStyle={styles.generateButton}
           onClick={() => {
             handleSubmit(onSubmit, onSubmitError)();

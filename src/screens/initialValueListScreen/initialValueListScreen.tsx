@@ -9,6 +9,7 @@ import {InitialValueContext} from '../../contexts/initialValueContext';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import '../../utils/i18n/config';
 
 const InitialValueListScreen = () => {
   const navigation =
