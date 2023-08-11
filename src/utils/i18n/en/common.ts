@@ -12,7 +12,12 @@ const common = {
     GENERATE_BUTTON: 'Start Generate',
     SAVE_SUCCESS: 'Successfully saved',
     SAVE_FAILED: 'One of the fields must be filled in.',
-    ZERO_PADDING_ERROR: 'Please input digits less than variable part.',
+    ZERO_PADDING_ERROR: 'Please input digits more than variable part.',
+  },
+  VALIDATION_ERROR: {
+    NUMBER: 'Please input number only.',
+    MAX_LENGTH: 'Max 9 digits.',
+    BOTH_NULL: 'Both fields cannot be empty.',
   },
 } as const;
 
