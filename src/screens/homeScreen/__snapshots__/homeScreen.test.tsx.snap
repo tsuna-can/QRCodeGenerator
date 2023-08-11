@@ -132,15 +132,15 @@ exports[`HomeScreen renders correctly 1`] = `
                           }
                         }
                       >
-                        Fixed Part
+                        Fixed part
                       </Text>
                       <TextInput
                         autoCapitalize="none"
                         autoCompleteType="email"
-                        label="Fixed Part"
+                        label="Fixed part"
                         onBlur={[Function]}
                         onChangeText={[Function]}
-                        placeholder="Fixed Part"
+                        placeholder="Fixed part"
                         style={
                           {
                             "backgroundColor": "white",
@@ -173,16 +173,16 @@ exports[`HomeScreen renders correctly 1`] = `
                           }
                         }
                       >
-                        Variable Part
+                        Variable part
                       </Text>
                       <TextInput
                         autoCapitalize="none"
                         autoCompleteType="number"
                         keyboardType="numeric"
-                        label="Variable Part"
+                        label="Variable part"
                         onBlur={[Function]}
                         onChangeText={[Function]}
-                        placeholder="Variable Part"
+                        placeholder="Variable part"
                         style={
                           {
                             "backgroundColor": "white",
@@ -217,7 +217,7 @@ exports[`HomeScreen renders correctly 1`] = `
                           }
                         }
                       >
-                        Digits for variable part
+                        Zero padding for variable part
                       </Text>
                       <View
                         style={

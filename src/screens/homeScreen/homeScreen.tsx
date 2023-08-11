@@ -94,6 +94,7 @@ const HomeScreen = () => {
 
   const fixedPartState = watch('fixedPart');
   const variablePartState = watch('variablePart');
+  const isDigitsValid = !(digits > 0 && digits < variablePartState.length); // TODO use react-form-hook also for digits
 
   useFocusEffect(
     useCallback(() => {
@@ -162,7 +163,7 @@ const HomeScreen = () => {
                 setOpen={setOpen}
                 setValue={setDigits}
                 setItems={setItems}
-                error={digits > 0 && digits < variablePartState.length}
+                error={!isDigitsValid}
                 label={t('HOME.ZERO_PADDING_FOR_VARIABLE_PART')}
                 errorMessage={t('HOME.ZERO_PADDING_ERROR')}
               />
@@ -171,7 +172,9 @@ const HomeScreen = () => {
           <View style={styles.saveButtonContainer}>
             <Button
               onClick={() => {
-                handleSubmit(onSave, onSaveError)();
+                isDigitsValid
+                  ? handleSubmit(onSave, onSaveError)()
+                  : showErrorToast(t('HOME.SAVE_FAILED'));
               }}
               color={COLORS.WHITE}
               buttonStyle={styles.saveButton}
@@ -201,7 +204,7 @@ const HomeScreen = () => {
       </View>
       <View style={styles.generateButtonContainer}>
         <Button
-          disabled={digits > 0 && digits < variablePartState.length}
+          disabled={!isDigitsValid}
           text={t('HOME.GENERATE_BUTTON')}
           buttonStyle={styles.generateButton}
           onClick={() => {

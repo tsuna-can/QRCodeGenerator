@@ -11,7 +11,7 @@ const common = {
     ZERO_PADDING_FOR_VARIABLE_PART: 'Zero padding for variable part',
     GENERATE_BUTTON: 'Start Generate',
     SAVE_SUCCESS: 'Successfully saved',
-    SAVE_FAILED: 'One of the fields must be filled in.',
+    SAVE_FAILED: 'Save failed',
     ZERO_PADDING_ERROR: 'Please input digits more than variable part.',
   },
   VALIDATION_ERROR: {
