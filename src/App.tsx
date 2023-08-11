@@ -10,6 +10,8 @@ import InitialValueListScreen from './screens/initialValueListScreen/initialValu
 import {SCREENS} from './utils/constants';
 import COLORS from './theme/colors';
 import {InitialValueProvider} from './contexts/initialValueContext';
+import {useTranslation} from 'react-i18next';
+import './utils/i18n/config';
 
 export type RootStackParamList = {
   [SCREENS.HOME]: undefined;
@@ -29,6 +31,8 @@ const commonOptions: NativeStackNavigationOptions = {
 };
 
 function App(): JSX.Element {
+  const {t} = useTranslation();
+
   return (
     <InitialValueProvider>
       <NavigationContainer>
@@ -36,14 +40,14 @@ function App(): JSX.Element {
           <Stack.Screen
             name={SCREENS.HOME}
             component={HomeScreen}
-            options={{...commonOptions, title: 'QR Code Generator'}}
+            options={{...commonOptions, title: `${t('SCREEN_TITLE.HOME')}`}}
           />
           <Stack.Screen
             name={SCREENS.QR_CODE}
             component={QRCodeScreen}
             options={{
               ...commonOptions,
-              title: 'QR Code',
+              title: `${t('SCREEN_TITLE.QR_CODE')}`,
             }}
           />
           <Stack.Screen
@@ -51,7 +55,7 @@ function App(): JSX.Element {
             component={InitialValueListScreen}
             options={{
               ...commonOptions,
-              title: 'Saved initial values',
+              title: `${t('SCREEN_TITLE.LIST')}`,
             }}
           />
         </Stack.Navigator>

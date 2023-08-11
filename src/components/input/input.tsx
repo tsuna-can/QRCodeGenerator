@@ -8,6 +8,8 @@ import {
   FieldError,
 } from 'react-hook-form';
 import styles from './input.styles';
+import {useTranslation} from 'react-i18next';
+import '../../utils/i18n/config';
 
 interface Props extends TextInputProps {
   control: Control<any>;
@@ -23,6 +25,8 @@ const Input: React.FC<Props> = ({
   defaultValue,
   ...props
 }) => {
+  const {t} = useTranslation();
+
   return (
     <Controller
       control={control}
@@ -43,7 +47,11 @@ const Input: React.FC<Props> = ({
           />
           {errors[name] ? (
             <Text style={styles.errorText}>
-              {(errors[name] as DeepMap<FieldValues, FieldError>)?.message}
+              {t(
+                `VALIDATION_ERROR.${(
+                  errors[name] as DeepMap<FieldValues, FieldError>
+                )?.message}` as any,
+              )}
             </Text>
           ) : (
             <Text style={styles.errorText} />
