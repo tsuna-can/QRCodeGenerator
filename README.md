@@ -2,14 +2,16 @@
 
 This is an app that easily generates **sequential** QR codes.
 
-![Home Screen](images/homeScreen.png)
-![QR Code Screen](images/QRCodeScreen.png)
-![List Screen](images/ListScreen.png)
+<img src="demo/demo.gif" width="50%">
+
+![Home Screen](demo/HomeScreen.png)
+![QR Code Screen](demo/QRCodeScreen.png)
+![List Screen](demo/ListScreen.png)
 
 # Getting started
 
 ```bash
-$ npm start
+$ npm install
 $ npm run android
 ```
 
